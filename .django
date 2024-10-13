@@ -1,0 +1,12 @@
+DJANGO_DB_HOST=db
+DJANGO_DB_NAME=django_db
+DJANGO_DB_USER=django_user
+DJANGO_DB_PASSWORD=django_password
+
+EMP_VECTOR_CACHE=redis://:2vBuMI9QeQ9tMGeG@sony-redis:6379/0
+
+CACHE=redis://:2vBuMI9QeQ9tMGeG@sony-redis:6379/1
+CELERY_BROKER_URL=redis://:2vBuMI9QeQ9tMGeG@sony-redis:6379/1
+CELERY_RESULT_BACKEND=redis://:2vBuMI9QeQ9tMGeG@sony-redis:6379/1
+
+LOCATION_ID=1

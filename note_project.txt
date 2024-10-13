@@ -1,0 +1,14 @@
+ล่าสุดทำถึงเปิดกล้องเช็คชื่อได้
+next step is:
+    - prevent the redundant recognition by redis
+    - capture transaction image send to master_server
+    - live stream frontend for kiosk
+
+//Overall
+frontend
+    - transaction
+    - upload 
+    - kios management
+
+master_server_api
+    - upload transaction image

@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: django_web
+    command: >
+      /bin/sh -c "python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - ./.django
+    devices:
+      - /dev/video0:/dev/video0
+    ports:
+      - "8000:8000"
+    networks:
+      - sony_network
+
+  celery_test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A kiosk worker -l info --concurrency=1 -Q test
+    volumes:
+      - .:/app
+    env_file:
+      - ./.django
+    depends_on:
+      - web
+    networks:
+      - sony_network
+  
+  face_recognition:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A kiosk worker -l info --concurrency=1 -Q face_recognition
+    volumes:
+      - .:/app
+    env_file:
+      - ./.django
+    devices:
+      - /dev/video0:/dev/video0
+    depends_on:
+      - web
+    networks:
+      - sony_network
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    command: celery -A kiosk beat -l info --schedule /app/celerybeat/schedule
+    volumes:
+      - ./:/app
+    env_file:
+      - ./.django
+    depends_on:
+      - web
+      - celery_test
+    networks:
+      - sony_network
+networks:
+  sony_network:
+    external: true
