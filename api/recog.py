@@ -45,6 +45,7 @@ class FaceRecognition:
             cap = cv2.VideoCapture(0)  # Open webcam
             frame_count = 0
             while True:
+                cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')) #fix if use WSL then enable this line
                 ret, frame = cap.read()  # Capture frame-by-frame
                 if not ret:
                     break
